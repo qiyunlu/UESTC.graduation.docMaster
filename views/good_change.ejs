@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<script src="build/react.js"></script>
+<script src="build/react-dom.js"></script>
+<script src="build/browser.min.js"></script>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <![endif]-->
+<title>User Page</title>
+<!-- BOOTSTRAP CORE STYLE  -->
+<link href="user_assets/css/bootstrap.css" rel="stylesheet" />
+<!-- FONT AWESOME STYLE  -->
+<link href="user_assets/css/font-awesome.css" rel="stylesheet" />
+<!-- CUSTOM STYLE  -->
+<link href="user_assets/css/style.css" rel="stylesheet" />
+<!-- GOOGLE FONT -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse set-radius-zero">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <h2 align="middle">Welcome <%=global.gUser.name%></h2>
+        </div>
+        <div class="right-div">
+            <a href="/user_info" class="btn btn-danger pull-right">GO BACK</a>
+        </div>
+    </div>
+</div>
+
+<!-- LOGO HEADER END-->
+<section class="menu-section">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="navbar-collapse collapse ">
+                    <ul id="menu-top" class="nav navbar-nav navbar-right"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div><a href="user_download" class="menu-top-active">&nbsp;</a></div>
+
+<div class="col-md-12 col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-heading" align="center">
+            <B><h1>修改成功！</h1></B>
+        </div>
+    </div>
+</div>
+
+<!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+<!-- CORE JQUERY  -->
+<script src="user_assets/js/jquery-1.10.2.js"></script>
+<!-- BOOTSTRAP SCRIPTS  -->
+<script src="user_assets/js/bootstrap.js"></script>
+<!-- CUSTOM SCRIPTS  -->
+<script src="user_assets/js/custom.js"></script>
+
+</body>
+</html>

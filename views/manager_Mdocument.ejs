@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+
+<title>Admin Page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="application/x-javascript">addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }</script>
+ <!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+<!-- Custom CSS -->
+<link href="css/style.css" rel='stylesheet' type='text/css' />
+<!-- Graph CSS -->
+<link href="css/font-awesome.css" rel="stylesheet"> 
+<!-- jQuery -->
+<!-- lined-icons -->
+<link rel="stylesheet" href="css/icon-font.min.css" type='text/css' />
+<!-- //lined-icons -->
+<!-- chart -->
+<script src="js/Chart.js"></script>
+<!-- //chart -->
+<!--animate-->
+<link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
+<script src="js/wow.min.js"></script>
+<script>
+	 new WOW().init();
+</script>
+ <!-- Meters graphs -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<!-- Placed js at the end of the document so the pages load faster -->
+
+</head>
+
+<body class="sticky-header left-side-collapsed"  onload="initMap()">
+	
+<section>
+<!-- left side start-->
+<div class="left-side sticky-left-side">
+	<div class="logo-icon text-center">
+		<a href="/whereYouWantToGo"><i class="lnr lnr-home"></i></a>
+	</div>
+	<!--logo and iconic logo end-->
+	<div class="left-side-inner">
+		<!--sidebar nav start-->
+		<ul class="nav nav-pills nav-stacked custom-nav">
+			<li><a href="/manager_index"><i class="lnr lnr-cog"></i><span>导航</span></a></li>
+			<li><a href="/manager_Maccount"><i class="lnr lnr-indent-increase"></i><span>用户账号管理</span></a></li>
+			<li><a href="/manager_Naccount"><i class="lnr lnr-spell-check"></i><span>新用户申请</span></a></li>
+			<li><a href="/manager_Mdocument"><i class="lnr lnr-menu"></i><span>文档管理</span></a></li>
+			<li><a href="/manager_Ndocument"><i class="lnr lnr-pencil"></i><span>文档上传</span></a></li>
+		</ul>
+		<!--sidebar nav end-->
+	</div>
+</div>
+<!-- left side end-->
+
+<!-- main content start-->
+<div class="main-content">
+	<!-- header-starts -->
+	<div class="header-section">
+	<!--toggle button start-->
+	<a class="toggle-btn  menu-collapsed"><i class="fa fa-bars"></i></a>
+	<!--toggle button end-->
+	<!--notification menu start -->
+	<div class="menu-right">
+		<div class="user-panel-top">
+			<div class="profile_details">
+				<ul>
+					<li class="dropdown profile_details_drop">
+						<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							<div class="profile_img">
+								<span style="background:url(images/1.jpg) no-repeat center"></span> 
+								<div class="user-name">
+									<p><%=global.gUser.name%><span>Administrator</span></p>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						</a>
+					</li>
+					<div class="clearfix"></div>
+				</ul>
+			</div>
+			<div class="social_icons">
+				<div class="col-md-4 social_icons-left pinterest">
+					<a href="/user_download"><i class="fa i1"></i><span>前往用户界面&nbsp;</span></a>
+				</div>
+				<div class="col-md-4 social_icons-left twi">
+					<a href="/logout"><i class="fa i1"></i><span>退出&nbsp;</span></a>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	</div>
+	<!-- //header-ends -->
+
+	<div id="page-wrapper">
+	<div class="graphs">
+	<h3 class="blank1">文档列表</h3>
+	<div class="xs tabls">
+	<div class="bs-example4" data-example-id="contextual-table">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>名称</th>
+					<th>作者</th>
+					<th>上传日期</th>
+					<th>简介</th>
+					<th>权限等级</th>
+					<th>删除</th>
+				</tr>
+			</thead>
+			<tbody>
+			<%
+			for(var i = 0; typeof(global.gDocument[i]) != "undefined"; i++) {
+			%>
+				<tr>
+				<form method="post" action="/changeDocAuth">
+				<input type="hidden" value="<%=global.gDocument[i].docId%>" name="documentId">
+					<th scope="row"><%= i+1%></th>
+					<td><%= global.gDocument[i].docName%></td>
+					<td><%= global.gDocument[i].docOwner%></td>
+					<td><%= global.gDocument[i].docDate%></td>
+					<td width="250"><%= global.gDocument[i].docContain%></td>
+					<td>
+					<input type="text" name="docAuthority" value="<%= global.gDocument[i].docAuthority%>" style="width:30px;text-align:center;" />
+					<input type="submit" value="提交修改" />
+					</td>
+				</form>
+				<form method="post" action="/deleteDocument">
+				<input type="hidden" value="<%=global.gDocument[i].docId%>" name="documentId">
+				<input type="hidden" value="<%=global.gDocument[i].docName%>" name="documentName">
+					<td><input type="submit" value="残忍删除" /></td>
+				</form>
+				</tr>
+			<%}%>
+			</tbody>
+		</table>
+	</div>
+	</div>
+	</div>
+	</div>
+</div>
+<!-- main content end-->
+</section>
+
+<script src="js/jquery.nicescroll.js"></script>
+<script src="js/scripts.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

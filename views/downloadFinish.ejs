@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="build/react.js"></script>
+<script src="build/react-dom.js"></script>
+<script src="build/browser.min.js"></script>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <![endif]-->
+<title>Thanks for Download</title>
+<!-- BOOTSTRAP CORE STYLE  -->
+<link href="user_assets/css/bootstrap.css" rel="stylesheet" />
+<!-- FONT AWESOME STYLE  -->
+<link href="user_assets/css/font-awesome.css" rel="stylesheet" />
+<!-- CUSTOM STYLE  -->
+<link href="user_assets/css/style.css" rel="stylesheet" />
+<!-- GOOGLE FONT -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+<script src="SM2andSM4/sm2/js/core.js"></script>
+<script src="SM2andSM4/sm2/js/cipher-core.js"></script>
+<script src="SM2andSM4/sm2/js/md5.js"></script>
+<script src="SM2andSM4/sm2/js/tripledes.js"></script>
+<script src="SM2andSM4/sm2/js/enc-base64.js"></script>
+<!-- for crypto -->
+<script src="SM2andSM4/sm2/js/sha1.js"></script>
+<script src="SM2andSM4/sm2/js/sha256.js"></script>
+<!-- for crypto, asn1, asn1x509 -->
+<script src="SM2andSM4/sm2/js/yahoo-min.js"></script>
+<!-- for asn1x509(stohex)
+<script src="http://kjur.github.io/jsjws/base64x-1.1.min.js"></script> -->
+
+<script src="SM2andSM4/sm2/js/jsbn.js"></script>
+<script src="SM2andSM4/sm2/js/jsbn2.js"></script>
+<script src="SM2andSM4/sm2/js/prng4.js"></script>
+<script src="SM2andSM4/sm2/js/rng.js"></script>
+<script src="SM2andSM4/sm2/js/rsa.js"></script>
+<script src="SM2andSM4/sm2/js/rsa2.js"></script>
+<script src="SM2andSM4/sm2/js/base64.js"></script>
+<script src="SM2andSM4/sm2/js/asn1hex-1.1.js"></script>
+<script src="SM2andSM4/sm2/js/rsapem-1.1.js"></script>
+<script src="SM2andSM4/sm2/js/rsasign-1.2.js"></script>
+<script src="SM2andSM4/sm2/js/x509-1.1.js"></script>
+<script src="SM2andSM4/sm2/js/pkcs5pkey-1.0.js"></script>
+<script src="SM2andSM4/sm2/js/asn1-1.0.js"></script>
+<script src="SM2andSM4/sm2/js/asn1x509-1.0.js"></script>
+<script src="SM2andSM4/sm2/js/crypto-1.1.js"></script>
+
+<script src="SM2andSM4/sm2/js/ec.js"></script>
+<script src="SM2andSM4/sm2/js/ec-patch.js"></script>
+<script src="SM2andSM4/sm2/js/ecdsa-modified-1.0.js"></script>
+<script src="SM2andSM4/sm2/js/sm3.js"></script>
+<script src="SM2andSM4/sm2/js/sm3-sm2-1.0.js"></script>
+<script src="SM2andSM4/sm2/js/ecparam-1.0.js"></script>
+<script src="SM2andSM4/sm2/js/sm2.js"></script>
+
+<script>
+	function doDecrypt() {
+        
+        var prvkey = document.form.publickey.value;
+        var encryptData = document.form.encryptdata.value;
+        
+        var privateKey = new BigInteger(prvkey, 16);
+      
+		var cipherMode = 1;
+            
+        var cipher = new SM2Cipher(cipherMode);
+        var data = cipher.Decrypt(privateKey, encryptData);
+      
+        document.form.data.value = data;
+    }
+</script>
+
+</head>
+<body>
+
+<h1>Finish</h1>
+<div>密文：<%=global.gCiphertext%></div>
+<div>Model：<%=global.gMachine.cpuModel%></div>
+<div>Model密文：<%=global.gMachine.encryptModel%></div>
+<div>MAC：<%=global.gMachine.netMac%></div>
+<div>MAC密文：<%=global.gMachine.encryptMac%></div>
+<div>***********************************************************************</div>
+<!-- now editing -->
+<form name="form">
+
+<input type="hidden" name="publickey" value="<%=global.gSM2.publicKey%>" />
+<input type="hidden" name="encryptdata" value="<%=global.gCiphertext%>" />
+
+<h4>(Step3) Decrypt message</h4>
+<input type="button" value="decrypt it!" onclick="doDecrypt();">
+<input type="reset" value="reset">
+
+<div><textarea type="text" name="data" rows="50" cols="150">null</textarea></div>
+</form>
+
+
+
+<!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+<!-- CORE JQUERY  -->
+<script src="user_assets/js/jquery-1.10.2.js"></script>
+<!-- BOOTSTRAP SCRIPTS  -->
+<script src="user_assets/js/bootstrap.js"></script>
+<!-- CUSTOM SCRIPTS  -->
+<script src="user_assets/js/custom.js"></script>
+
+</body>
+</html>

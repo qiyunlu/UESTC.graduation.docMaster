@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<script src="build/react.js"></script>
+<script src="build/react-dom.js"></script>
+<script src="build/browser.min.js"></script>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <![endif]-->
+<title>Document Information</title>
+<!-- BOOTSTRAP CORE STYLE  -->
+<link href="user_assets/css/bootstrap.css" rel="stylesheet" />
+<!-- FONT AWESOME STYLE  -->
+<link href="user_assets/css/font-awesome.css" rel="stylesheet" />
+<!-- CUSTOM STYLE  -->
+<link href="user_assets/css/style.css" rel="stylesheet" />
+<!-- GOOGLE FONT -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+<script src="SM2andSM4/sm2/js/core.js"></script>
+<script src="SM2andSM4/sm2/js/cipher-core.js"></script>
+<script src="SM2andSM4/sm2/js/md5.js"></script>
+<script src="SM2andSM4/sm2/js/tripledes.js"></script>
+<script src="SM2andSM4/sm2/js/enc-base64.js"></script>
+<!-- for crypto -->
+<script src="SM2andSM4/sm2/js/sha1.js"></script>
+<script src="SM2andSM4/sm2/js/sha256.js"></script>
+<!-- for crypto, asn1, asn1x509 -->
+<script src="SM2andSM4/sm2/js/yahoo-min.js"></script>
+<!-- for asn1x509(stohex)
+<script src="http://kjur.github.io/jsjws/base64x-1.1.min.js"></script> -->
+
+<script src="SM2andSM4/sm2/js/jsbn.js"></script>
+<script src="SM2andSM4/sm2/js/jsbn2.js"></script>
+<script src="SM2andSM4/sm2/js/prng4.js"></script>
+<script src="SM2andSM4/sm2/js/rng.js"></script>
+<script src="SM2andSM4/sm2/js/rsa.js"></script>
+<script src="SM2andSM4/sm2/js/rsa2.js"></script>
+<script src="SM2andSM4/sm2/js/base64.js"></script>
+<script src="SM2andSM4/sm2/js/asn1hex-1.1.js"></script>
+<script src="SM2andSM4/sm2/js/rsapem-1.1.js"></script>
+<script src="SM2andSM4/sm2/js/rsasign-1.2.js"></script>
+<script src="SM2andSM4/sm2/js/x509-1.1.js"></script>
+<script src="SM2andSM4/sm2/js/pkcs5pkey-1.0.js"></script>
+<script src="SM2andSM4/sm2/js/asn1-1.0.js"></script>
+<script src="SM2andSM4/sm2/js/asn1x509-1.0.js"></script>
+<script src="SM2andSM4/sm2/js/crypto-1.1.js"></script>
+
+<script src="SM2andSM4/sm2/js/ec.js"></script>
+<script src="SM2andSM4/sm2/js/ec-patch.js"></script>
+<script src="SM2andSM4/sm2/js/ecdsa-modified-1.0.js"></script>
+<script src="SM2andSM4/sm2/js/sm3.js"></script>
+<script src="SM2andSM4/sm2/js/sm3-sm2-1.0.js"></script>
+<script src="SM2andSM4/sm2/js/ecparam-1.0.js"></script>
+<script src="SM2andSM4/sm2/js/sm2.js"></script>
+
+<script>
+function doCrypt() {
+    // 加密参数
+    var curve = 'sm2';
+    var ec = new KJUR.crypto.ECDSA({"curve": curve});
+    // 1(C1C3C2); 2(C1C2C3)
+    var cipherMode = 1;
+    
+    // 文件公私钥对
+    var keypair = ec.generateKeyPairHex();
+    publickey = keypair.ecprvhex;
+    privatekey = keypair.ecpubhex;
+    document.goBack.publickey.value = publickey;
+    document.goBack.privatekey.value = privatekey;
+
+    var cpumodel = CryptoJS.enc.Utf8.parse(document.form.cpumodel.value);
+    var netmac = CryptoJS.enc.Utf8.parse(document.form.netmac.value);
+    var message = document.form.message.value;
+    var msgData = CryptoJS.enc.Utf8.parse(message);
+
+    var pubkeyHex = privatekey;
+    if (pubkeyHex.length > 64 * 2) {
+        pubkeyHex = pubkeyHex.substr(pubkeyHex.length - 64 * 2);
+    }
+
+    var xHex = pubkeyHex.substr(0, 64);
+    var yHex = pubkeyHex.substr(64);
+    
+    var cipher = new SM2Cipher(cipherMode);
+    var userKey = cipher.CreatePoint(xHex, yHex);
+  
+    msgData = cipher.GetWords(msgData.toString());
+    cpumodel = cipher.GetWords(cpumodel.toString());
+    netmac = cipher.GetWords(netmac.toString());
+  
+    var encryptmodel = cipher.Encrypt(userKey, cpumodel);
+    var encryptmac = cipher.Encrypt(userKey, netmac);
+    // 密文
+    var encryptData = cipher.Encrypt(userKey, msgData);
+    encryptdata = encryptData;
+    document.goBack.encryptdata.value = encryptdata;
+    document.goBack.encryptmodel.value = encryptmodel;
+    document.goBack.encryptmac.value = encryptmac;
+}
+</script>
+
+</head>
+
+<body>
+
+<%
+var privatekey = '';
+var publickey = '';
+var encryptdata = '';
+var encryptmodel = '';
+var encryptmac = '';
+%>
+<form name="form">
+    <input type="hidden" value="<%=innerDoc%>" name="message" />
+    <input type="hidden" value="<%=global.gMachine.cpuModel%>" name="cpumodel" />
+    <input type="hidden" value="<%=global.gMachine.netMac%>" name="netmac" />
+</form>
+
+<div class="navbar navbar-inverse set-radius-zero">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <h2 align="middle">Welcome <%=global.gUser.name%></h2>
+        </div>
+        <div class="right-div">
+            <a href="/user_download" class="btn btn-danger pull-right">GO BACK</a>
+        </div>
+    </div>
+</div>
+
+<!-- LOGO HEADER END-->
+<section class="menu-section">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="navbar-collapse collapse ">
+                    <ul id="menu-top" class="nav navbar-nav navbar-right"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div><a href="user_download" class="menu-top-active">&nbsp;</a></div>
+
+<div class="col-md-12 col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <B>文件详情</B>
+        </div>
+        <div class="panel-body">
+            <ul class="nav nav-pills">
+                <li class=""><a href="#home-pills" data-toggle="tab">基本信息</a></li>
+                <li class=""><a href="#profile-pills" data-toggle="tab">详细介绍</a></li>
+                <li class=""><a href="#messages-pills" data-toggle="tab" onclick="doCrypt();">下载</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade" id="home-pills">
+                    <h4><B>Basics</B></h4>
+                    <p>
+						<div><B>文件名</B>：<%= global.gChooseDoc.docName%></div>
+						<div><B>内容简介</B>：<%= global.gChooseDoc.docContain%></div>
+						<div><B>上传者</B>：<%= global.gChooseDoc.docOwner%></div>
+						<div><B>上传时间</B>：<%= global.gChooseDoc.docDate%></div>
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="profile-pills">
+                    <h4><B>Introduction</B></h4>
+                    <p>
+						<div><%= global.gChooseDoc.docIntroduction%></div>
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="messages-pills">
+                    <h4><B>Download</B></h4>
+                    <p>
+						<div>
+							<form method="post" action="/docDownload" name="goBack">
+							<div><B>下载后我们将向您的邮箱发送验证码，请勿向外人泄露。
+                                    当您遗失验证码时，可以查看此网站的下载历史找回。</B></div>
+                            <input type="hidden" name="publickey" />
+                            <input type="hidden" name="privatekey" />
+                            <input type="hidden" name="encryptdata" />
+                            <input type="hidden" name="encryptmodel" />
+                            <input type="hidden" name="encryptmac" />
+							<input type="submit" value="点击下载" />
+							</form>
+						</div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+<!-- CORE JQUERY  -->
+<script src="user_assets/js/jquery-1.10.2.js"></script>
+<!-- BOOTSTRAP SCRIPTS  -->
+<script src="user_assets/js/bootstrap.js"></script>
+<!-- CUSTOM SCRIPTS  -->
+<script src="user_assets/js/custom.js"></script>
+
+</body>
+</html>

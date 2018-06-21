@@ -1,0 +1,27 @@
+{
+  "name": "docmaster",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "latest",
+    "cookie-parser": "latest",
+    "debug": "latest",
+    "ejs": "latest",
+    "express": "latest",
+    "morgan": "latest",
+    "serve-favicon": "latest",
+    "easymysql": "latest",
+    "mysql": "latest",
+    "connect-mysql": "latest",
+    "express-session": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "cluster": "latest",
+    "nodemon": "latest",
+    "nodemailer": "latest",
+    "nodemailer-smtp-transport": "latest"
+  }
+}

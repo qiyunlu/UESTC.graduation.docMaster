@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>User Check</title>
+<script src="./js/jquery-3.2.1.min.js"></script>
+<script>
+function doA() {
+	var Name = "";
+	var Password = "";
+	var name = document.form1.name.value;
+	var password = document.form1.password.value;
+	if (Name !== name) {
+		window.location.href="./html/error.html";
+	} else if (Password !== password) {
+		window.location.href="./html/error.html";
+	} else {
+		window.location.href="./html/index2.html";
+	}
+}
+</script>
+</head>
+<body>
+<h1>你是谁？</h1>
+<form name="form1">
+<div>用户：<input type="text" name="name" /></div>
+<div>密码：<input type="text" name="password" /></div>
+<input type="button" value="验证" onclick="doA();" />
+</form>
+</body>
+</html>
